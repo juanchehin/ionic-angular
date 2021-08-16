@@ -1,0 +1,53 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-button slot="start">
+            <ion-back-button defaultHref="/places/tabs/offers"></ion-back-button>
+        </ion-button>
+        <ion-title>new-offer</ion-title>
+        <ion-buttons slot="primary">
+            <ion-button (click)="onCreateOffer()" [disabled]="!form.valid"></ion-button>
+            <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="form">
+        <ion-grid>
+            <ion-row>
+                <ion-col size-sm="6" size-sm="3">
+                    <ion-label>Title</ion-label>
+                    <ion-input type="text" autocomplete autocorrect formControlName="title"></ion-input>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size-sm="6" size-sm="3">
+                    <ion-label position="floading">Descript</ion-label>
+                    <ion-textarea rows="3" formControlName="description"></ion-textarea>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="!form.get('description').valid && form.get('description').touched">
+                <ion-col size-sm="6" size-sm="3">
+                    <p>La descripcion no debe superar los 180 caracteres</p>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size-sm="6" size-sm="3">
+                    <ion-label>Price</ion-label>
+                    <ion-input type="number" formControlName="price"></ion-input>
+
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size-sm="3" size-sm="3">
+                    <ion-label>Avalaible from</ion-label>
+                    <ion-datetime min="2019-01-01" max="2025-12-31" formControlName="dateFrom"></ion-datetime>
+                </ion-col>
+                <ion-col size-sm="3">
+                    <ion-label>Avalaible to</ion-label>
+                    <ion-datetime min="2019-01-02" max="2025-12-31" formControlName="dateTo"></ion-datetime>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+</ion-content>
