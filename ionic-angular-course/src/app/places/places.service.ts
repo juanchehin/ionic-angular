@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Place } from './places.model';
+import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlacesService {
-  private _places: Place[] = [
+  private _places  = new BehaviorSubject<Place[]>([
     new Place('p1',
     'Manhjatan',
     'Lindo lugar',
@@ -34,10 +36,11 @@ export class PlacesService {
     new Date('2020-12-31'),
     'pos'
     )
-  ];
+  ]);
 
   get places() {
-    return [...this._places];
+    // Devuelvo los 'places' como observable para poder subscribirse desde afuera     
+    return this._places.asObservable();
   }
 
 
@@ -62,6 +65,15 @@ export class PlacesService {
       dateTo,
       this.authService.userId
     );
-    this._places.push(newPlace);
+    // Me subscribo al observable 'places'
+    // Solo quiero obtener el conjunto actual de lugares y no recibir las actualizaciones futuras
+    // Llamo al metodo pipe que existe en cada observable
+    // take(1) nos permite obtener la ultima lista de lugares y no lugares futuros
+
+    this.places.pipe(take(1)).subscribe(places => {
+      // Agrego el nuevo place 'newPlace' a places
+      // Luego con next emitimos el nuevo 'places'
+      this._places.next(places.concat(newPlace));
+    });
   }
 }
