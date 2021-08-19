@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
-import { Place } from './places.model';
-import { take } from 'rxjs/operators';
+import { Place } from './place.model';
+import { take, map, tap, delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class PlacesService {
   private _places  = new BehaviorSubject<Place[]>([
     new Place('p1',
@@ -47,11 +48,12 @@ export class PlacesService {
   constructor(private authService: AuthService) { }
 
   getPlace(id: string){
-    return {
-      ...this._places.find(
-      p => p.id === id
-      )
-    };
+    return this.places.pipe(
+      take(1),  // Obtengo solo el ultimo 'place'
+      map(places => {
+        places.find(p => p.id === id)
+    })
+    );
   }
 
   addPlace(title: string,description: string,price: number,dateFrom: Date,dateTo: Date){
@@ -70,10 +72,37 @@ export class PlacesService {
     // Llamo al metodo pipe que existe en cada observable
     // take(1) nos permite obtener la ultima lista de lugares y no lugares futuros
 
-    this.places.pipe(take(1)).subscribe(places => {
-      // Agrego el nuevo place 'newPlace' a places
-      // Luego con next emitimos el nuevo 'places'
-      this._places.next(places.concat(newPlace));
-    });
-  }
+    return this.places.pipe(
+      take(1),
+      delay(1000),
+      tap(places => {
+        // Agrego el nuevo place 'newPlace' a places
+        // Luego con next emitimos el nuevo 'places'
+        this._places.next(places.concat(newPlace));
+        })
+    );
+}
+
+updatePlace(placeId: string, title: string, description: string) {
+  return this.places.pipe(
+    take(1),
+    delay(1000),
+    tap(places => {
+      const updatedPlaceIndex = places.findIndex(pl => pl.id === placeId);
+      const updatedPlaces = [...places];
+      const oldPlace = updatedPlaces[updatedPlaceIndex];
+      updatedPlaces[updatedPlaceIndex] = new Place(
+        oldPlace.id,
+        title,
+        description,
+        oldPlace.imageUrl,
+        oldPlace.price,
+        oldPlace.availableFrom,
+        oldPlace.availableTo,
+        oldPlace.userId
+      );
+      this._places.next(updatedPlaces);
+    })
+  );
+}
 }

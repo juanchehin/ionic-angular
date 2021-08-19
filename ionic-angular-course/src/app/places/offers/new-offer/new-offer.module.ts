@@ -4,16 +4,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { NewOfferPageRoutingModule } from './new-offer-routing.module';
-
 import { NewOfferPage } from './new-offer.page';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    IonicModule,
-    NewOfferPageRoutingModule
+    IonicModule
   ],
   declarations: [NewOfferPage]
 })

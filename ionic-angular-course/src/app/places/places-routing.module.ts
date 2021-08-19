@@ -18,7 +18,9 @@ const routes: Routes = [
           },
           { 
             path: ':placeId',
-            loadChildren: './discover/place-detail/place-detail.module#PlaceDetailPageModule'
+            // loadChildren: './discover/place-detail/place-detail.module#PlaceDetailPageModule'
+            loadChildren: () => import('./discover/place-detail/place-detail.module').then(m => m.PlaceDetailPageModule)
+
           }
         ]
       },
@@ -32,15 +34,19 @@ const routes: Routes = [
           },
           { 
             path: 'new',
-            loadChildren: './offers/new-offer/new-offer.module#NewOfferPageModule'
+            // loadChildren: './offers/new-offer/new-offer.module#NewOfferPageModule'
+            loadChildren: () => import('./offers/new-offer/new-offer.module').then(m => m.NewOfferPageModule)
           },
           { 
             path: 'edit/:placeId',
-            loadChildren: './offers/edit-offer/edit-offer.module#EditOfferPageModule'
+            // loadChildren: './offers/edit-offer/edit-offer.module#EditOfferPageModule'
+            loadChildren: () => import('./offers/edit-offer/edit-offer.module').then(m => m.EditOfferPageModule)
+
           },
           { 
             path: ':placeId',
-            loadChildren: './offers/offer-bookings/offer-bookings.modulle#OfferBookingsPageModule'
+            // loadChildren: './offers/offer-bookings/offer-bookings.modulle#OfferBookingsPageModule'
+            loadChildren: () => import('./offers/offer-bookings/offer-bookings.module').then(m => m.OfferBookingsPageModule)
           }
         ]
       },

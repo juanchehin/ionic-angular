@@ -7,9 +7,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './auth/auth.service';
 import { Router } from '@angular/router';
 
-console.log('pasa app component');
-
-
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',

@@ -10,9 +10,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
 
-console.log('pasa app module');
-
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
