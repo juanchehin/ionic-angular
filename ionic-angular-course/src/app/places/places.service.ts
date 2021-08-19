@@ -1,62 +1,69 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
-import { Place } from './place.model';
 import { take, map, tap, delay } from 'rxjs/operators';
+
+import { Place } from './place.model';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class PlacesService {
-  private _places  = new BehaviorSubject<Place[]>([
-    new Place('p1',
-    'Manhjatan',
-    'Lindo lugar',
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Gotham.jpg/1200px-Above_Gotham.jpg',
-     2000,
-     new Date('2020-01-01'),
-     new Date('2020-12-31'),
-     'abc'
-     ),
-    new Place('p2',
-    'Manhjatan 2',
-    'Lindo lugar 2',
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Gotham.jpg/1200px-Above_Gotham.jpg',
-    4000,
-    new Date('2020-01-01'),
-    new Date('2020-12-31'),
-    'bcs'
+  private _places = new BehaviorSubject<Place[]>([
+    new Place(
+      'p1',
+      'Manhattan Mansion',
+      'In the heart of New York City.',
+      'https://lonelyplanetimages.imgix.net/mastheads/GettyImages-538096543_medium.jpg?sharp=10&vib=20&w=1200',
+      149.99,
+      new Date('2019-01-01'),
+      new Date('2019-12-31'),
+      'abc'
     ),
-    new Place('p3',
-    'Manhjatan 3',
-    'Lindo lugar32',
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Gotham.jpg/1200px-Above_Gotham.jpg',
-    3000,
-    new Date('2020-01-01'),
-    new Date('2020-12-31'),
-    'pos'
+    new Place(
+      'p2',
+      "L'Amour Toujours",
+      'A romantic place in Paris!',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Paris_Night.jpg/1024px-Paris_Night.jpg',
+      189.99,
+      new Date('2019-01-01'),
+      new Date('2019-12-31'),
+      'abc'
+    ),
+    new Place(
+      'p3',
+      'The Foggy Palace',
+      'Not your average city trip!',
+      'https://upload.wikimedia.org/wikipedia/commons/0/01/San_Francisco_with_two_bridges_and_the_fog.jpg',
+      99.99,
+      new Date('2019-01-01'),
+      new Date('2019-12-31'),
+      'abc'
     )
   ]);
 
   get places() {
-    // Devuelvo los 'places' como observable para poder subscribirse desde afuera     
     return this._places.asObservable();
   }
 
+  constructor(private authService: AuthService) {}
 
-  constructor(private authService: AuthService) { }
-
-  getPlace(id: string){
+  getPlace(id: string) {
     return this.places.pipe(
-      take(1),  // Obtengo solo el ultimo 'place'
+      take(1),
       map(places => {
-        places.find(p => p.id === id)
-    })
+        return { ...places.find(p => p.id === id) };
+      })
     );
   }
 
-  addPlace(title: string,description: string,price: number,dateFrom: Date,dateTo: Date){
+  addPlace(
+    title: string,
+    description: string,
+    price: number,
+    dateFrom: Date,
+    dateTo: Date
+  ) {
     const newPlace = new Place(
       Math.random().toString(),
       title,
@@ -67,42 +74,35 @@ export class PlacesService {
       dateTo,
       this.authService.userId
     );
-    // Me subscribo al observable 'places'
-    // Solo quiero obtener el conjunto actual de lugares y no recibir las actualizaciones futuras
-    // Llamo al metodo pipe que existe en cada observable
-    // take(1) nos permite obtener la ultima lista de lugares y no lugares futuros
-
     return this.places.pipe(
       take(1),
       delay(1000),
       tap(places => {
-        // Agrego el nuevo place 'newPlace' a places
-        // Luego con next emitimos el nuevo 'places'
         this._places.next(places.concat(newPlace));
-        })
+      })
     );
-}
+  }
 
-updatePlace(placeId: string, title: string, description: string) {
-  return this.places.pipe(
-    take(1),
-    delay(1000),
-    tap(places => {
-      const updatedPlaceIndex = places.findIndex(pl => pl.id === placeId);
-      const updatedPlaces = [...places];
-      const oldPlace = updatedPlaces[updatedPlaceIndex];
-      updatedPlaces[updatedPlaceIndex] = new Place(
-        oldPlace.id,
-        title,
-        description,
-        oldPlace.imageUrl,
-        oldPlace.price,
-        oldPlace.availableFrom,
-        oldPlace.availableTo,
-        oldPlace.userId
-      );
-      this._places.next(updatedPlaces);
-    })
-  );
-}
+  updatePlace(placeId: string, title: string, description: string) {
+    return this.places.pipe(
+      take(1),
+      delay(1000),
+      tap(places => {
+        const updatedPlaceIndex = places.findIndex(pl => pl.id === placeId);
+        const updatedPlaces = [...places];
+        const oldPlace = updatedPlaces[updatedPlaceIndex];
+        updatedPlaces[updatedPlaceIndex] = new Place(
+          oldPlace.id,
+          title,
+          description,
+          oldPlace.imageUrl,
+          oldPlace.price,
+          oldPlace.availableFrom,
+          oldPlace.availableTo,
+          oldPlace.userId
+        );
+        this._places.next(updatedPlaces);
+      })
+    );
+  }
 }
