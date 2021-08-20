@@ -42,11 +42,6 @@ const routes: Routes = [
             // loadChildren: './offers/edit-offer/edit-offer.module#EditOfferPageModule'
             loadChildren: () => import('./offers/edit-offer/edit-offer.module').then(m => m.EditOfferPageModule)
 
-          },
-          { 
-            path: ':placeId',
-            // loadChildren: './offers/offer-bookings/offer-bookings.modulle#OfferBookingsPageModule'
-            loadChildren: () => import('./offers/offer-bookings/offer-bookings.module').then(m => m.OfferBookingsPageModule)
           }
         ]
       },
