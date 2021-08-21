@@ -66,7 +66,7 @@ export class PlacesService {
   fetchPlaces() {
     return this.http
       .get<{ [key: string]: PlaceData }>(
-        'https://ionic-angular-5773a-default-rtdb.firebaseio.com/offered-places.json'
+        'https://ionic-angular-5773a-default-rtdb.firebaseio.com/soffered-places.json'
       )
       .pipe(
         map(resData => {
@@ -194,7 +194,7 @@ export class PlacesService {
           oldPlace.location
         );
         return this.http.put(
-          `https://ionic-angular-5773a-default-rtdb.firebaseio.com/${placeId}.json`,
+          `https://ionic-angular-5773a-default-rtdb.firebaseio.com/offered-places/${placeId}.json`,
           { ...updatedPlaces[updatedPlaceIndex], id: null }
         );
       }),
