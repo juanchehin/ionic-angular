@@ -8,11 +8,12 @@ import {
   Input
 } from '@angular/core';
 import {
-  Plugins,
+  // Plugins,
   Capacitor,
-  CameraSource,
-  CameraResultType
+  // CameraSource,
+  // CameraResultType
 } from '@capacitor/core';
+import { CameraSource, CameraResultType, Camera } from '@capacitor/camera';
 import { Platform } from '@ionic/angular';
 
 @Component({
@@ -48,7 +49,7 @@ export class ImagePickerComponent implements OnInit {
       this.filePickerRef.nativeElement.click();
       return;
     }
-    Plugins.Camera.getPhoto({
+    Camera.getPhoto({
       quality: 50,
       source: CameraSource.Prompt,
       correctOrientation: true,
@@ -57,8 +58,11 @@ export class ImagePickerComponent implements OnInit {
       resultType: CameraResultType.Base64
     })
       .then(image => {
-        this.selectedImage = image.base64Data;
-        this.imagePick.emit(image.base64Data);
+        // this.selectedImage = image.base64Data;
+        // this.imagePick.emit(image.base64Data);
+        
+        this.selectedImage = image.base64String;
+        this.imagePick.emit(image.base64String);
       })
       .catch(error => {
         console.log(error);

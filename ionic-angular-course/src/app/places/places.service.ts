@@ -66,7 +66,7 @@ export class PlacesService {
   fetchPlaces() {
     return this.http
       .get<{ [key: string]: PlaceData }>(
-        'https://ionic-angular-5773a-default-rtdb.firebaseio.com/soffered-places.json'
+        'https://ionic-angular-5773a-default-rtdb.firebaseio.com/offered-places.json'
       )
       .pipe(
         map(resData => {
@@ -119,20 +119,33 @@ export class PlacesService {
       );
   }
 
+  // Se debe habilitar la facturacion en "google firebase funcionts" para usar esta funcion
+  // uploadImage(image: File) {
+  //   const uploadData = new FormData();
+  //   uploadData.append('image', image);
+
+  //   return this.http.post<{imageUrl: string, imagePath: string}>(
+  //     'https://us-central1-ionic-angular-course.cloudfunctions.net/storeImage',
+  //     uploadData
+  //   );
+  // }
+
   addPlace(
     title: string,
     description: string,
     price: number,
     dateFrom: Date,
     dateTo: Date,
-    location: PlaceLocation
+    location: PlaceLocation,
+    imageUrl: string
   ) {
     let generatedId: string;
     const newPlace = new Place(
       Math.random().toString(),
       title,
       description,
-      'https://lonelyplanetimages.imgix.net/mastheads/GettyImages-538096543_medium.jpg?sharp=10&vib=20&w=1200',
+      // imageUrl,
+      `https://upload.wikimedia.org/wikipedia/commons/0/01/San_Francisco_with_two_bridges_and_the_fog.jpg`,
       price,
       dateFrom,
       dateTo,

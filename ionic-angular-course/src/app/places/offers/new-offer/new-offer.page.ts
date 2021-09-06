@@ -101,10 +101,10 @@ export class NewOfferPage implements OnInit {
       })
       .then(loadingEl => {
         loadingEl.present();
-        this.placesService
-          .uploadImage(this.form.get('image').value)
-          .pipe(
-            switchMap(uploadRes => {
+        // this.placesService
+          // .uploadImage(this.form.get('image').value)  // Para usar esta funcion se debe habilitar la facturacion para "google firebase functions"
+          // .pipe(
+            // .switchMap(uploadRes => {
               return this.placesService.addPlace(
                 this.form.value.title,
                 this.form.value.description,
@@ -112,9 +112,9 @@ export class NewOfferPage implements OnInit {
                 new Date(this.form.value.dateFrom),
                 new Date(this.form.value.dateTo),
                 this.form.value.location,
-                uploadRes.imageUrl
-              );
-            })
+                "https://upload.wikimedia.org/wikipedia/commons/0/01/San_Francisco_with_two_bridges_and_the_fog.jpg"
+              // );
+            // })
           )
           .subscribe(() => {
             loadingEl.dismiss();
