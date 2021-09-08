@@ -2,7 +2,8 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, from } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { Plugins } from '@capacitor/core';
+// import { Plugins } from '@capacitor/core';
+import { Storage } from '@capacitor/Storage';
 
 import { environment } from '../../environments/environment';
 import { User } from './user.model';
@@ -63,8 +64,8 @@ export class AuthService implements OnDestroy {
   constructor(private http: HttpClient) {}
 
   autoLogin() {
-    return from(Plugins.Storage.get({ key: 'authData' })).pipe(
-      map(storedData => {
+    return from(Storage.get({ key: 'authData' })).pipe(
+      map((storedData: any) => {
         if (!storedData || !storedData.value) {
           return null;
         }
@@ -112,7 +113,7 @@ export class AuthService implements OnDestroy {
   login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${
           environment.firebaseAPIKey
         }`,
         { email: email, password: password, returnSecureToken: true }
@@ -125,7 +126,7 @@ export class AuthService implements OnDestroy {
       clearTimeout(this.activeLogoutTimer);
     }
     this._user.next(null);
-    Plugins.Storage.remove({ key: 'authData' });
+    Storage.remove({ key: 'authData' });
   }
 
   ngOnDestroy() {
