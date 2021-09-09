@@ -144,6 +144,7 @@ export class AuthService implements OnDestroy {
     }, duration);
   }
 
+  // Guarda los datos del usuario en caso de que este autenticado
   private setUserData(userData: AuthResponseData) {
     const expirationTime = new Date(
       new Date().getTime() + +userData.expiresIn * 1000
@@ -176,6 +177,6 @@ export class AuthService implements OnDestroy {
       tokenExpirationDate: tokenExpirationDate,
       email: email
     });
-    Plugins.Storage.set({ key: 'authData', value: data });
+    Storage.set({ key: 'authData', value: data });
   }
 }
