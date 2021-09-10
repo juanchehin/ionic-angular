@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PlacesPage } from './places.page';
 
+console.log('pasa places-routign');
+
+
 const routes: Routes = [
   {
     path: 'tabs',
@@ -51,11 +54,16 @@ const routes: Routes = [
         pathMatch: 'full'
       }
     ]
+  },
+  {
+    path: '',
+    redirectTo: '/places/tabs/discover',
+    pathMatch: 'full'
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class PlacesRoutingModule {}

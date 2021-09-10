@@ -1,21 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Platform } from '@ionic/angular';
-import { Plugins , Capacitor } from '@capacitor/core';
+import { Capacitor } from '@capacitor/core';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 import { AuthService } from './auth/auth.service';
-import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  templateUrl: 'app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
+  private authSub: Subscription;
+  private previousAuthState = false;
+
   constructor(
     private platform: Platform,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private splashScreen: SplashScreen
   ) {
     this.initializeApp();
   }
@@ -23,13 +28,27 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       if(Capacitor.isPluginAvailable('SplashScreen')){
-        Plugins.splashScreen.hide();
+        this.splashScreen.hide();
       }
     });
   }
 
-  onLogout(){
+  ngOnInit() {
+    this.authSub = this.authService.userIsAuthenticated.subscribe(isAuth => {
+      if (!isAuth && this.previousAuthState !== isAuth) {
+        this.router.navigateByUrl('/auth');
+      }
+      this.previousAuthState = isAuth;
+    });
+  }
+
+  onLogout() {
     this.authService.logout();
-    this.router.navigateByUrl('/auth');
+  }
+
+  ngOnDestroy() {
+    if (this.authSub) {
+      this.authSub.unsubscribe();
+    }
   }
 }

@@ -5,11 +5,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DiscoverPageRoutingModule } from './discover-routing.module';
-
 import { DiscoverPage } from './discover.page';
 
-console.log('entra discover');
+console.log('pasa discover module');
+
 
 const routes: Routes = [
   {

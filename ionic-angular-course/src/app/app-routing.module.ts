@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 
+console.log('pasa app-routgin');
 
 const routes: Routes = [
   { 
@@ -18,7 +19,7 @@ const routes: Routes = [
     path: 'places',
     // loadChildren: './places/places.module#PlacesPageModule'
     loadChildren: () => import('./places/places.module').then(m => m.PlacesPageModule),
-    canLoad: [AuthGuard]
+    // canLoad: [AuthGuard]
    },
   { 
     path: 'bookings',
