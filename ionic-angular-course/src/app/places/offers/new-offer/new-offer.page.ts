@@ -64,7 +64,9 @@ export class NewOfferPage implements OnInit {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
-      location: new FormControl(null, { validators: [Validators.required] }),
+      location: new FormControl(null
+        //  { validators: [Validators.required] }
+         ),
       image: new FormControl(null)
     });
   }
@@ -92,7 +94,8 @@ export class NewOfferPage implements OnInit {
   }
 
   onCreateOffer() {
-    if (!this.form.valid || !this.form.get('image').value) {
+    // if (!this.form.valid || !this.form.get('image').value) {
+    if (!this.form.valid) {
       return;
     }
     this.loadingCtrl
@@ -111,7 +114,7 @@ export class NewOfferPage implements OnInit {
                 +this.form.value.price,
                 new Date(this.form.value.dateFrom),
                 new Date(this.form.value.dateTo),
-                this.form.value.location,
+                this.form.value.location || null,
                 "https://upload.wikimedia.org/wikipedia/commons/0/01/San_Francisco_with_two_bridges_and_the_fog.jpg"
               // );
             // })

@@ -38,12 +38,9 @@ export class AuthPage implements OnInit {
         }
         authObs.subscribe(
           resData => {
-            // console.log(resData);
             this.isLoading = false;
             loadingEl.dismiss();
-            console.log('pasa authenticate');
             this.router.navigateByUrl("/places/tabs/discover");
-            console.log('pasa authenticate 1');
           },
           errRes => {
             loadingEl.dismiss();

@@ -3,9 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PlacesPage } from './places.page';
 
-console.log('pasa places-routign');
-
-
 const routes: Routes = [
   {
     path: 'tabs',

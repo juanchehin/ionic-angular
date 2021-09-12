@@ -7,9 +7,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { DiscoverPage } from './discover.page';
 
-console.log('pasa discover module');
-
-
 const routes: Routes = [
   {
     path: '',

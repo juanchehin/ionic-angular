@@ -40,7 +40,7 @@ export class CreateBookingComponent implements OnInit {
     }
   }
 
-  onCancel() {
+  onCancel() {   
     this.modalCtrl.dismiss(null, 'cancel');
   }
 
@@ -48,6 +48,7 @@ export class CreateBookingComponent implements OnInit {
     if (!this.form.valid || !this.datesValid) {
       return;
     }
+    this.modalCtrl.dismiss();
 
     this.modalCtrl.dismiss(
       {
@@ -64,8 +65,8 @@ export class CreateBookingComponent implements OnInit {
   }
 
   datesValid() {
-    const startDate = new Date(this.form.value['date-from']);
-    const endDate = new Date(this.form.value['date-to']);
+    const startDate = new Date(this.form.value['date-from'] || null);
+    const endDate = new Date(this.form.value['date-to'] || null);
     return endDate > startDate;
   }
 }
