@@ -59,26 +59,22 @@ export class CreateBookingComponent implements OnInit {
     }
     // this.modalCtrl.dismiss();
 
-    this.modalCtrl.dismiss()
-          .then(async () => {
-            await console.log("dentro await")
-          })
-          .catch(console.error);
+    this.modalCtrl.dismiss(
+      {
+            bookingData: {
+              firstName: this.form.value['first-name'],
+              lastName: this.form.value['last-name'],
+              guestNumber: +this.form.value['guest-number'],
+              startDate: new Date(this.form.value['date-from']),
+              endDate: new Date(this.form.value['date-to'])
+            }
+          },
+          'confirm'
+    ).then(async () => {
+      await console.log("")
+    })
+    .catch(console.error);
 
-    //  this.modalCtrl.dismiss(
-    //   {
-    //     bookingData: {
-    //       firstName: this.form.value['first-name'],
-    //       lastName: this.form.value['last-name'],
-    //       guestNumber: +this.form.value['guest-number'],
-    //       startDate: new Date(this.form.value['date-from']),
-    //       endDate: new Date(this.form.value['date-to'])
-    //     }
-    //   },
-    //   'confirm'
-    // );
-
-    console.log("fin onBookPlace")
   }
 
   datesValid() {
