@@ -46,6 +46,14 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
+  onLogin() {
+    this.router.navigateByUrl('/auth');
+  }
+
+  rutear() {
+    this.router.navigateByUrl('/bookings');
+  }
+
   ngOnDestroy() {
     if (this.authSub) {
       this.authSub.unsubscribe();

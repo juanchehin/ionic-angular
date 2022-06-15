@@ -23,7 +23,7 @@ const routes: Routes = [
     path: 'bookings',
     // loadChildren: './bookings/bookings.module#BookingsPageModule', 
     loadChildren: () => import('./bookings/bookings.module').then(m => m.BookingsPageModule),
-    canLoad: [AuthGuard] 
+    // canLoad: [AuthGuard] 
   },
 ];
 
