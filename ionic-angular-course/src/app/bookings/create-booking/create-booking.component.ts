@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 
 import { Place } from '../../places/place.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-booking',
@@ -12,7 +13,9 @@ import { Place } from '../../places/place.model';
 export class CreateBookingComponent implements OnInit {
   @Input() selectedPlace: Place;
   @Input() selectedMode: 'select' | 'random';
+
   @ViewChild('f') form: NgForm;
+  
   startDate: string;
   endDate: string;
 
@@ -40,28 +43,42 @@ export class CreateBookingComponent implements OnInit {
     }
   }
 
-  onCancel() {   
-    this.modalCtrl.dismiss(null, 'cancel');
+  async onCancel() {
+    // await this.modalCtrl.dismiss(null, 'cancel');
+    
+    this.modalCtrl.dismiss()
+          .then(async () => {
+            await null
+          })
+          .catch(console.error);
   }
 
   onBookPlace() {
     if (!this.form.valid || !this.datesValid) {
       return;
     }
-    this.modalCtrl.dismiss();
+    // this.modalCtrl.dismiss();
 
-    this.modalCtrl.dismiss(
-      {
-        bookingData: {
-          firstName: this.form.value['first-name'],
-          lastName: this.form.value['last-name'],
-          guestNumber: +this.form.value['guest-number'],
-          startDate: new Date(this.form.value['date-from']),
-          endDate: new Date(this.form.value['date-to'])
-        }
-      },
-      'confirm'
-    );
+    this.modalCtrl.dismiss()
+          .then(async () => {
+            await console.log("dentro await")
+          })
+          .catch(console.error);
+
+    //  this.modalCtrl.dismiss(
+    //   {
+    //     bookingData: {
+    //       firstName: this.form.value['first-name'],
+    //       lastName: this.form.value['last-name'],
+    //       guestNumber: +this.form.value['guest-number'],
+    //       startDate: new Date(this.form.value['date-from']),
+    //       endDate: new Date(this.form.value['date-to'])
+    //     }
+    //   },
+    //   'confirm'
+    // );
+
+    console.log("fin onBookPlace")
   }
 
   datesValid() {
