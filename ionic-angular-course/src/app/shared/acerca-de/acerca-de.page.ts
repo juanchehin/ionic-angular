@@ -18,7 +18,7 @@ export class AcercaDePage implements OnInit {
   async onCancel() {
     // await this.modalCtrl.dismiss(null, 'cancel');
     
-    this.modalCtrl.dismiss()
+    await this.modalCtrl.dismiss()
           .then(async () => {
             await null
           })
