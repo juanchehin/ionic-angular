@@ -36,21 +36,21 @@ export class LocationPickerComponent implements OnInit {
   onPickLocation() {
     this.actionSheetCtrl
       .create({
-        header: 'Please Choose',
+        header: 'Elige una',
         buttons: [
           {
-            text: 'Auto-Locate',
+            text: 'Auto-localizar',
             handler: () => {
               this.locateUser();
             }
           },
           {
-            text: 'Pick on Map',
+            text: 'Seleccionar en mapa',
             handler: () => {
               this.openMap();
             }
           },
-          { text: 'Cancel', role: 'cancel' }
+          { text: 'Cancelar', role: 'cancel' }
         ]
       })
       .then(actionSheetEl => {
@@ -82,8 +82,8 @@ export class LocationPickerComponent implements OnInit {
   private showErrorAlert() {
     this.alertCtrl
       .create({
-        header: 'Could not fetch location',
-        message: 'Please use the map to pick a location!',
+        header: 'No se puede obtener la localizacion',
+        message: 'Utiliza el mapa para localizar',
         buttons: ['Okay']
       })
       .then(alertEl => alertEl.present());

@@ -21,8 +21,8 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('map') mapElementRef: ElementRef;
   @Input() center = { lat: -34.397, lng: 150.644 };
   @Input() selectable = true;
-  @Input() closeButtonText = 'Cancel';
-  @Input() title = 'Pick Location';
+  @Input() closeButtonText = 'Cancelar';
+  @Input() title = 'Selecciona un punto';
   clickListener: any;
   googleMaps: any;
 
@@ -59,7 +59,7 @@ export class MapModalComponent implements OnInit, AfterViewInit, OnDestroy {
           const marker = new googleMaps.Marker({
             position: this.center,
             map: map,
-            title: 'Picked Location'
+            title: 'Ubicacion elejida'
           });
           marker.setMap(map);
         }

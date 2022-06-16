@@ -69,8 +69,8 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
           error => {
             this.alertCtrl
               .create({
-                header: 'An error ocurred!',
-                message: 'Could not load place.',
+                header: 'Ocurrio un error!',
+                message: 'No se puede cargar el lugar.',
                 buttons: [
                   {
                     text: 'Okay',
@@ -92,16 +92,16 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
     this.navCtrl.pop();
     this.actionSheetCtrl
       .create({
-        header: 'Choose an Action',
+        header: 'Elija una accion',
         buttons: [
           {
-            text: 'Select Date',
+            text: 'Seleccionar fecha...',
             handler: () => {
               this.openBookingModal('select');
             }
           },
           {
-            text: 'Random Date',
+            text: 'Fecha aleatoria',
             handler: () => {
               this.openBookingModal('random');
             }
