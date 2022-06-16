@@ -7,6 +7,7 @@ import { Storage } from '@capacitor/Storage';
 
 import { environment } from '../../environments/environment';
 import { User } from './user.model';
+import { Router } from '@angular/router';
 
 export interface AuthResponseData {
   kind: string;
@@ -29,8 +30,11 @@ export class AuthService implements OnDestroy {
     return this._user.asObservable().pipe(
       map(user => {
         if (user) {
+          console.log("pasa if")
           return !!user.token;
         } else {
+          console.log("pasa else")
+        this.router.navigateByUrl('/auth');
           return false;
         }
       })
@@ -61,7 +65,10 @@ export class AuthService implements OnDestroy {
     );
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router
+    ) {}
 
   autoLogin() {
     return from(Storage.get({ key: 'authData' })).pipe(

@@ -5,6 +5,7 @@ import { take, tap, delay, switchMap, map } from 'rxjs/operators';
 
 import { Booking } from './booking.model';
 import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 interface BookingData {
   bookedFrom: string;
@@ -26,7 +27,7 @@ export class BookingService {
     return this._bookings.asObservable();
   }
 
-  constructor(private authService: AuthService, private http: HttpClient) {}
+  constructor(private authService: AuthService, private http: HttpClient,private router: Router) {}
 
   addBooking(
     placeId: string,
@@ -105,6 +106,7 @@ export class BookingService {
       take(1),
       switchMap(userId => {
         if (!userId) {
+          this.router.navigateByUrl('/auth');
           throw new Error('User not found!');
         }
         fetchedUserId = userId;
