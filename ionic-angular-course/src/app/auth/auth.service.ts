@@ -30,10 +30,8 @@ export class AuthService implements OnDestroy {
     return this._user.asObservable().pipe(
       map(user => {
         if (user) {
-          console.log("pasa if")
           return !!user.token;
         } else {
-          console.log("pasa else")
         this.router.navigateByUrl('/auth');
           return false;
         }
