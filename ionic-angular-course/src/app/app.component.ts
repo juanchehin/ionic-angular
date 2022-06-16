@@ -63,6 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
       component: AcercaDePage,
       cssClass: 'my-custom-class'
     });
+    
     return await modal.present();
   }
 
